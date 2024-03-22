@@ -21,24 +21,17 @@ import org.springframework.web.bind.annotation.RestController;
                 String stationName = mapCityToStationName(city);
                 double fee = deliveryFeeService.calculateDeliveryFee(stationName, vehicleType);
                 return ResponseEntity.ok(fee);
-            } catch (UnsupportedOperationException e) {
-                return ResponseEntity.badRequest().body(e.getMessage());
             } catch (Exception e) {
-
                 return ResponseEntity.internalServerError().body("An unexpected error occurred");
             }
         }
 
         private String mapCityToStationName(String city) {
-            switch (city.toLowerCase()) {
-                case "tartu":
-                    return "Tartu-Tõravere";
-                case "tallinn":
-                    return "Tallinn-Harku";
-                case "pärnu":
-                    return "Pärnu";
-                default:
-                    return city;
-            }
+            return switch (city.toLowerCase()) {
+                case "tartu" -> "Tartu-Tõravere";
+                case "tallinn" -> "Tallinn-Harku";
+                case "pärnu" -> "Pärnu";
+                default -> city;
+            };
         }
     }

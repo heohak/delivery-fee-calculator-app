@@ -1,7 +1,10 @@
 package org.example.fujitsu.service;
 
 import org.example.fujitsu.entity.WeatherData;
+import org.example.fujitsu.exceptions.WeatherDataNotFoundException;
 import org.example.fujitsu.repository.WeatherDataRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -10,16 +13,18 @@ import java.util.List;
 @Service
 public class DeliveryFeeService {
 
+    private static final Logger log = LoggerFactory.getLogger(DeliveryFeeService.class);
+
     @Autowired
     private WeatherDataRepository weatherDataRepository;
 
     public double calculateDeliveryFee(String city, String vehicleType) {
         List<WeatherData> weatherDataList = weatherDataRepository.findWeatherDataByStationNameOrdered(city);
-        WeatherData latestWeather = weatherDataList.isEmpty() ? null : weatherDataList.get(0);
-
-        if (latestWeather == null) {
-            throw new IllegalStateException("No weather data available for " + city);
+        if (weatherDataList.isEmpty()) {
+            log.warn("No weather data available for {}", city);
+            throw new WeatherDataNotFoundException(city);
         }
+        WeatherData latestWeather = weatherDataList.get(0);
 
         double baseFee = calculateBaseFee(city, vehicleType);
         double extraFees = calculateExtraFees(vehicleType, latestWeather);
