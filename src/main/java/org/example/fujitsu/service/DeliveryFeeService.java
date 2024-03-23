@@ -1,21 +1,20 @@
 package org.example.fujitsu.service;
 
+import lombok.AllArgsConstructor;
 import org.example.fujitsu.entity.WeatherData;
 import org.example.fujitsu.exceptions.WeatherDataNotFoundException;
 import org.example.fujitsu.repository.WeatherDataRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-
+@AllArgsConstructor
 @Service
 public class DeliveryFeeService {
 
     private static final Logger log = LoggerFactory.getLogger(DeliveryFeeService.class);
 
-    @Autowired
     private WeatherDataRepository weatherDataRepository;
 
     public double calculateDeliveryFee(String city, String vehicleType) {
@@ -72,7 +71,7 @@ public class DeliveryFeeService {
 
             if (weatherPhenomenon.contains("snow") || weatherPhenomenon.contains("sleet")) {
                 extraFee += 1.0;
-            } else if (weatherPhenomenon.contains("rain")) {
+            } else if (weatherPhenomenon.contains("rain") || weatherPhenomenon.contains("shower")) {
                 extraFee += 0.5;
             }
 

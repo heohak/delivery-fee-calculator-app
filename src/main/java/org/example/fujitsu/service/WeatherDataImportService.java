@@ -1,13 +1,12 @@
 package org.example.fujitsu.service;
 
+import lombok.AllArgsConstructor;
 import org.example.fujitsu.entity.WeatherData;
 import org.example.fujitsu.repository.WeatherDataRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -21,12 +20,12 @@ import java.io.StringReader;
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
-
+@AllArgsConstructor
 @Service
 public class WeatherDataImportService {
     private static final Logger log = LoggerFactory.getLogger(WeatherDataImportService.class);
     private static final String WEATHER_DATA_URL = "https://www.ilmateenistus.ee/ilma_andmed/xml/observations.php";
-    @Autowired
+
     private WeatherDataRepository weatherDataRepository;
 
     @Scheduled(cron = "0 * * * * *")
