@@ -17,6 +17,18 @@ public class DeliveryFeeService {
 
     private WeatherDataRepository weatherDataRepository;
 
+    /**
+     * Calculates the delivery fee based on the city, vehicle type, and current weather conditions.
+     * The method first retrieves the latest weather data for the given city. It then calculates the base fee
+     * according to the vehicle type and applies any extra fees that may be warranted by the current weather conditions.
+     * Extra fees are determined based on air temperature, wind speed, and weather phenomena such as rain, snow, or sleet.
+     *
+     * @param city The city for which the delivery fee is being calculated.
+     * @param vehicleType The type of vehicle used for delivery, affecting the base delivery fee.
+     * @return The total delivery fee, which includes the base fee and any extra fees due to weather conditions.
+     * @throws WeatherDataNotFoundException if no weather data is available for the specified city.
+     * @throws UnsupportedOperationException if the weather conditions make the usage of the selected vehicle type forbidden.
+     */
     public double calculateDeliveryFee(String city, String vehicleType) {
         List<WeatherData> weatherDataList = weatherDataRepository.findWeatherDataByStationNameOrdered(city);
         if (weatherDataList.isEmpty()) {
@@ -83,7 +95,7 @@ public class DeliveryFeeService {
         if ("Bike".equals(vehicleType)) {
             if (weatherData.getWindSpeed() > 20) {
                 throw new UnsupportedOperationException("Usage of selected vehicle type is forbidden due to high wind speed");
-            } else if (weatherData.getWindSpeed() >= 10 && weatherData.getWindSpeed() <= 20) {
+            } else if (weatherData.getWindSpeed() >= 10) {
                 extraFee += 0.5;
             }
         }

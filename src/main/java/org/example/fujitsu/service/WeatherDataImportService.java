@@ -28,6 +28,11 @@ public class WeatherDataImportService {
 
     private WeatherDataRepository weatherDataRepository;
 
+    /**
+     * Periodically imports weather data from a predefined URL, parses it,
+     * and saves the relevant data to the database. The method is scheduled to run
+     * once every hour, 15 minutes after a full hour. It logs warnings for no data and errors for unexpected issues during the import.
+     */
     @Scheduled(cron = "0 * * * * *")
     public void importWeatherData() {
         try {
