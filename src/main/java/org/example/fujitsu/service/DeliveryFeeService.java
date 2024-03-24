@@ -9,6 +9,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+
 @AllArgsConstructor
 @Service
 public class DeliveryFeeService {
@@ -23,10 +24,10 @@ public class DeliveryFeeService {
      * according to the vehicle type and applies any extra fees that may be warranted by the current weather conditions.
      * Extra fees are determined based on air temperature, wind speed, and weather phenomena such as rain, snow, or sleet.
      *
-     * @param city The city for which the delivery fee is being calculated.
+     * @param city        The city for which the delivery fee is being calculated.
      * @param vehicleType The type of vehicle used for delivery, affecting the base delivery fee.
      * @return The total delivery fee, which includes the base fee and any extra fees due to weather conditions.
-     * @throws WeatherDataNotFoundException if no weather data is available for the specified city.
+     * @throws WeatherDataNotFoundException  if no weather data is available for the specified city.
      * @throws UnsupportedOperationException if the weather conditions make the usage of the selected vehicle type forbidden.
      */
     public double calculateDeliveryFee(String city, String vehicleType) {
@@ -47,23 +48,32 @@ public class DeliveryFeeService {
         switch (city) {
             case "Tallinn-Harku":
                 switch (vehicleType) {
-                    case "Car": return 4.0;
-                    case "Scooter": return 3.5;
-                    case "Bike": return 3.0;
+                    case "Car":
+                        return 4.0;
+                    case "Scooter":
+                        return 3.5;
+                    case "Bike":
+                        return 3.0;
                 }
                 break;
             case "Tartu-Tõravere":
                 switch (vehicleType) {
-                    case "Car": return 3.5;
-                    case "Scooter": return 3.0;
-                    case "Bike": return 2.5;
+                    case "Car":
+                        return 3.5;
+                    case "Scooter":
+                        return 3.0;
+                    case "Bike":
+                        return 2.5;
                 }
                 break;
             case "Pärnu":
                 switch (vehicleType) {
-                    case "Car": return 3.0;
-                    case "Scooter": return 2.5;
-                    case "Bike": return 2.0;
+                    case "Car":
+                        return 3.0;
+                    case "Scooter":
+                        return 2.5;
+                    case "Bike":
+                        return 2.0;
                 }
                 break;
         }
