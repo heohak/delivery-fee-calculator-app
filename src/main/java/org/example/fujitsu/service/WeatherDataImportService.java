@@ -34,7 +34,7 @@ public class WeatherDataImportService {
      * and saves the relevant data to the database. The method is scheduled to run
      * once every hour, 15 minutes after a full hour. It logs warnings for no data and errors for unexpected issues during the import.
      */
-    @Scheduled(cron = "0 * * * * *")
+    @Scheduled(cron = "0 15 * * * *")
     public void importWeatherData() {
         try {
             RestTemplate restTemplate = new RestTemplate();
